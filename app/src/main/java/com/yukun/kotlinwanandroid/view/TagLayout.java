@@ -1,4 +1,4 @@
-package com.yukunkun.wanandroid.views;
+package com.yukun.kotlinwanandroid.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -14,7 +14,6 @@ public class TagLayout extends ViewGroup {
 
     public TagLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         children = new ArrayList<int[]>();
     }
 
@@ -77,7 +76,6 @@ public class TagLayout extends ViewGroup {
 
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
-
             int[] position = children.get(i);
             child.layout(position[0], position[1], position[2], position[3]);
         }

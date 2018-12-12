@@ -1,4 +1,4 @@
-package com.yukunkun.wanandroid.views;
+package com.yukun.kotlinwanandroid.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
@@ -165,14 +165,14 @@ public class SwipeItemLayout extends ViewGroup {
                 widthMeasureSpec,horizontalMargin+horizontalPadding,
                 heightMeasureSpec,verticalMargin+verticalPadding);
 
-        if(widthMode==MeasureSpec.AT_MOST)
+        if(widthMode== MeasureSpec.AT_MOST)
             widthSize = Math.min(widthSize,mMainView.getMeasuredWidth()+horizontalMargin+horizontalPadding);
-        else if(widthMode==MeasureSpec.UNSPECIFIED)
+        else if(widthMode== MeasureSpec.UNSPECIFIED)
             widthSize = mMainView.getMeasuredWidth()+horizontalMargin+horizontalPadding;
 
-        if(heightMode==MeasureSpec.AT_MOST)
+        if(heightMode== MeasureSpec.AT_MOST)
             heightSize = Math.min(heightSize,mMainView.getMeasuredHeight()+verticalMargin+verticalPadding);
-        else if(heightMode==MeasureSpec.UNSPECIFIED)
+        else if(heightMode== MeasureSpec.UNSPECIFIED)
             heightSize = mMainView.getMeasuredHeight()+verticalMargin+verticalPadding;
 
         setMeasuredDimension(widthSize,heightSize);
@@ -180,8 +180,8 @@ public class SwipeItemLayout extends ViewGroup {
         //side layout大小为自身实际大小
         lp = (MarginLayoutParams) mSideView.getLayoutParams();
         verticalMargin = lp.topMargin+lp.bottomMargin;
-        mSideView.measure(MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED),
-                MeasureSpec.makeMeasureSpec(getMeasuredHeight()-verticalMargin-verticalPadding,MeasureSpec.EXACTLY));
+        mSideView.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                MeasureSpec.makeMeasureSpec(getMeasuredHeight()-verticalMargin-verticalPadding, MeasureSpec.EXACTLY));
     }
 
     @Override
@@ -339,7 +339,7 @@ public class SwipeItemLayout extends ViewGroup {
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
-        if(getVisibility()!=View.VISIBLE){
+        if(getVisibility()!= View.VISIBLE){
             mScrollOffset = 0;
             invalidate();
         }
@@ -353,7 +353,7 @@ public class SwipeItemLayout extends ViewGroup {
         }
     };
 
-    class ScrollRunnable implements Runnable{
+    class ScrollRunnable implements Runnable {
         private static final int FLING_DURATION = 200;
         private Scroller mScroller;
         private boolean mAbort;
@@ -413,7 +413,7 @@ public class SwipeItemLayout extends ViewGroup {
 
         @Override
         public void run() {
-            Log.e("abort",Boolean.toString(mAbort));
+            Log.e("abort", Boolean.toString(mAbort));
             if(!mAbort){
                 boolean more = mScroller.computeScrollOffset();
                 int curX = mScroller.getCurrX();
@@ -750,7 +750,7 @@ public class SwipeItemLayout extends ViewGroup {
 
     }
 
-    static View findTopChildUnder(ViewGroup parent,int x, int y) {
+    static View findTopChildUnder(ViewGroup parent, int x, int y) {
         final int childCount = parent.getChildCount();
         for (int i = childCount - 1; i >= 0; i--) {
             final View child = parent.getChildAt(i);

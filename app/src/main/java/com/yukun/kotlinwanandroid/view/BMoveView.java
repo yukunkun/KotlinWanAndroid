@@ -1,4 +1,4 @@
-package com.yk.bmoveview;
+package com.yukun.kotlinwanandroid.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -54,41 +53,41 @@ public class BMoveView extends View {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.BMoveView, defStyleAttr, 0);
-
-        int n = a.getIndexCount();
-
-        for (int i = 0; i < n; i++) {
-            int attr = a.getIndex(i);
-            switch (attr) {
-                case R.styleable.BMoveView_circleColor:
-                    mCircleColor = a.getColor(attr, Color.WHITE);
-                    break;
-                case R.styleable.BMoveView_lineColor:
-                    mLineColor = a.getColor(attr, Color.GRAY);
-                    break;
-                case R.styleable.BMoveView_circleCenterColor:
-                    mCircleCenterColor = a.getColor(attr, Color.GRAY);
-                    break;
-                case R.styleable.BMoveView_lineDuration:
-                    mLineDuration = a.getInt(attr,500);
-                    break;
-                case R.styleable.BMoveView_lineWidth:
-                    mLineWidth = a.getInt(attr, 5);
-                    break;
-                case R.styleable.BMoveView_circleDuration:
-                    mCircleDuration = a.getInt(attr,500);
-                    break;
-                case R.styleable.BMoveView_circlemRadio:
-                    mCirclemRadio = a.getInt(attr,500);
-                    break;
-                case R.styleable.BMoveView_buttonCount:
-                    mButonCount = a.getInt(attr,3);
-                    break;
-            }
-        }
-        a.recycle();
+//
+//        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.BMoveView, defStyleAttr, 0);
+//
+//        int n = a.getIndexCount();
+//
+//        for (int i = 0; i < n; i++) {
+//            int attr = a.getIndex(i);
+//            switch (attr) {
+//                case R.styleable.BMoveView_circleColor:
+//                    mCircleColor = a.getColor(attr, Color.WHITE);
+//                    break;
+//                case R.styleable.BMoveView_lineColor:
+//                    mLineColor = a.getColor(attr, Color.GRAY);
+//                    break;
+//                case R.styleable.BMoveView_circleCenterColor:
+//                    mCircleCenterColor = a.getColor(attr, Color.GRAY);
+//                    break;
+//                case R.styleable.BMoveView_lineDuration:
+//                    mLineDuration = a.getInt(attr,500);
+//                    break;
+//                case R.styleable.BMoveView_lineWidth:
+//                    mLineWidth = a.getInt(attr, 5);
+//                    break;
+//                case R.styleable.BMoveView_circleDuration:
+//                    mCircleDuration = a.getInt(attr,500);
+//                    break;
+//                case R.styleable.BMoveView_circlemRadio:
+//                    mCirclemRadio = a.getInt(attr,500);
+//                    break;
+//                case R.styleable.BMoveView_buttonCount:
+//                    mButonCount = a.getInt(attr,3);
+//                    break;
+//            }
+//        }
+//        a.recycle();
         mBoardWidth=dip2px(context,mCirclemRadio);
         mRadio=dip2px(context,mLineWidth);
         mPaint=new Paint();

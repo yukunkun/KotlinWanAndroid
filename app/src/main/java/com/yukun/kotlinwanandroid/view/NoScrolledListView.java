@@ -1,4 +1,4 @@
-package com.yukunkun.wanandroid.views;
+package com.yukun.kotlinwanandroid.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,7 +1,5 @@
 package com.yukun.kotlinwanandroid.fragment
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.View
 import com.yukun.kotlinwanandroid.BaseFragment
 import com.yukun.kotlinwanandroid.R
@@ -10,8 +8,16 @@ import com.yukun.kotlinwanandroid.R
  * author: kun .
  * date:   On 2018/12/12
  */
-class HotFragment(): BaseFragment() {
+class IndexFragment(): BaseFragment() {
 
+    companion object {
+        var indexFragment : IndexFragment ?= null
+
+        fun getInstance():IndexFragment{
+            indexFragment=IndexFragment()
+            return indexFragment!!
+        }
+    }
     override fun initUI(inflate: View) {
     }
 
@@ -22,7 +28,7 @@ class HotFragment(): BaseFragment() {
     }
 
     override fun initLayout(): Int {
-        return R.layout.hot_fragment
+        return R.layout.index_fragment
     }
 
 }

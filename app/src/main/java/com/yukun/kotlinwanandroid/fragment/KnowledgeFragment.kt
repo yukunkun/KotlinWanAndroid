@@ -10,8 +10,16 @@ import com.yukun.kotlinwanandroid.R
  * author: kun .
  * date:   On 2018/12/12
  */
-class HotFragment(): BaseFragment() {
+class KnowledgeFragment(): BaseFragment() {
 
+    companion object {
+        var knowledgeFragment : KnowledgeFragment ?= null
+
+        fun getInstance():KnowledgeFragment{
+            knowledgeFragment=KnowledgeFragment()
+            return knowledgeFragment!!
+        }
+    }
     override fun initUI(inflate: View) {
     }
 
@@ -22,7 +30,7 @@ class HotFragment(): BaseFragment() {
     }
 
     override fun initLayout(): Int {
-        return R.layout.hot_fragment
+        return R.layout.knowledge_fragment
     }
 
 }
