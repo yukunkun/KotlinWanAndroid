@@ -14,14 +14,19 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val inflate = inflater.inflate(initLayout(), null)
-        initUI(inflate)
-        initData()
-        initListener()
         return inflate
     }
 
+    //fragment只能在这儿取到id onCreateView获取要报空
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initUI(view,savedInstanceState)
+        initData()
+        initListener()
+//        super.onViewCreated(view, savedInstanceState)
+    }
+
     abstract fun initLayout(): Int
-    abstract fun initUI(inflate:View)
+    abstract fun initUI(inflate: View, savedInstanceState: Bundle?)
     abstract fun initData()
     abstract fun initListener()
 }

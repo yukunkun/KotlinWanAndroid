@@ -20,6 +20,6 @@ abstract class BaseActivity :AppCompatActivity() {
     abstract fun initLayout(): Int
     abstract fun initUI()
     abstract fun initData()
-    abstract fun initListener();
+    abstract fun initListener()
 
 }

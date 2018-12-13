@@ -1,7 +1,6 @@
 package com.yukun.kotlinwanandroid.fragment
 
-import android.os.Parcel
-import android.os.Parcelable
+import android.os.Bundle
 import android.view.View
 import com.yukun.kotlinwanandroid.BaseFragment
 import com.yukun.kotlinwanandroid.R
@@ -20,7 +19,7 @@ class KnowledgeFragment(): BaseFragment() {
             return knowledgeFragment!!
         }
     }
-    override fun initUI(inflate: View) {
+    override fun initUI(inflate: View, savedInstanceState: Bundle?) {
     }
 
     override fun initData() {

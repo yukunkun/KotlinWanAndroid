@@ -48,23 +48,20 @@ class MainActivity : BaseActivity() {
     override fun initListener() {
         rg.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                println(checkedId)
-                // checkedId 为 1 2 3
-                if(checkedId in 1..4 ){
-                    (rg.getChildAt(checkedId-1) as RadioButton).isChecked=true
-                    showFragment(checkedId-1)
+                when(checkedId){
+                   R.id.rb_index -> {
+                       (rg.getChildAt(0) as RadioButton).isChecked=true
+                       showFragment(0)
+                   }
+                    R.id.rb_knowledge -> {
+                       (rg.getChildAt(1) as RadioButton).isChecked=true
+                        showFragment(1)
+                   }
+                    R.id.rb_mine -> {
+                       (rg.getChildAt(2) as RadioButton).isChecked=true
+                        showFragment(2)
+                   }
                 }
-//                when(checkedId){
-//                   1 -> {
-//                        (rg.getChildAt(checkedId) as RadioButton).isChecked=true
-//                   }
-//                   2 -> {
-//                       (rg.getChildAt(checkedId) as RadioButton).isChecked=true
-//                   }
-//                   3 ->{
-//                       (rg.getChildAt(checkedId) as RadioButton).isChecked=true
-//                   }
-//                }
             }
         })
     }
