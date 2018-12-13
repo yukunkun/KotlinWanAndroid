@@ -1,5 +1,6 @@
 package com.yukun.kotlinwanandroid.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.yukun.kotlinwanandroid.BaseFragment
 import com.yukun.kotlinwanandroid.R
+import com.yukun.kotlinwanandroid.activity.MineActivity
 import com.yukun.kotlinwanandroid.adapter.RVIndexAdapter
 import com.yukun.kotlinwanandroid.beans.HomeListResponse
 import com.yukun.kotlinwanandroid.network.BaseCallBack
@@ -97,6 +99,14 @@ class IndexFragment: BaseFragment() {
                 initData()
             }
         } )
+
+        iv_me.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                var intent=Intent(context,MineActivity::class.java)
+                startActivity(intent)
+            }
+
+        })
     }
 
     override fun initLayout(): Int {

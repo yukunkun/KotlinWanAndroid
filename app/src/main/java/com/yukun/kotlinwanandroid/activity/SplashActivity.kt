@@ -13,6 +13,7 @@ import java.util.*
 
 class SplashActivity : AppCompatActivity() {
     private var nextInt = 0
+    //可编辑的集合
     var imageList= mutableListOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,16 +28,9 @@ class SplashActivity : AppCompatActivity() {
     private fun startAnimation() {
         //位移动画
         var translateAnimation=TranslateAnimation(0f,0f,400f,0f)
-        translateAnimation.duration=2100
+        translateAnimation.duration=1900
         tv_remind.animation=translateAnimation
-        translateAnimation.startNow()
-
-        //放大动画
-        var scanAnimation= ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        scanAnimation.duration=2000
-
-        scanAnimation.setAnimationListener(object : Animation.AnimationListener{
+        translateAnimation.setAnimationListener(object : Animation.AnimationListener{
             override fun onAnimationRepeat(animation: Animation?) {
 
             }
@@ -45,11 +39,14 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-
             override fun onAnimationStart(animation: Animation?) {
             }
-
         })
+        translateAnimation.startNow()
+        //放大动画
+        var scanAnimation= ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        scanAnimation.duration=2000
         iv_bg.animation=scanAnimation
         scanAnimation.startNow()
     }

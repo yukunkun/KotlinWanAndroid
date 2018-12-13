@@ -8,11 +8,9 @@ import com.yukun.kotlinwanandroid.MyApp
  * date:   On 2018/12/13
  */
 class ToastUtils {
-
     companion object {
         fun show(msg:String){
-            Toast.makeText(MyApp.getMyApplication(),msg,Toast.LENGTH_SHORT).show()
+            Toast.makeText(MyApp.getInstance()!!.getMyApplication(),msg,Toast.LENGTH_SHORT).show()
         }
     }
-
 }

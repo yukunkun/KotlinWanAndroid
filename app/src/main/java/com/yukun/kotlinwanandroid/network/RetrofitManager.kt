@@ -1,5 +1,7 @@
 package com.yukun.kotlinwanandroid.network
 import android.util.Log
+import com.yukun.kotlinwanandroid.utils.Preference
+import encodeCookie
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,6 +18,11 @@ class RetrofitManager {
     var mOkHttpClient:OkHttpClient?=null
     var mRetrofit:Retrofit?=null
     var baseUrl="http://www.wanandroid.com/"
+
+    private  val SAVE_USER_LOGIN_KEY = "user/login"
+    private  val SAVE_USER_REGISTER_KEY = "user/register"
+    private  val SET_COOKIE_KEY = "set-cookie"
+    private  val COOKIE_NAME = "Cookie"
 
     companion object {
 
@@ -45,7 +52,51 @@ class RetrofitManager {
         builder.writeTimeout(10000,TimeUnit.SECONDS)
         builder.readTimeout(10000,TimeUnit.SECONDS)
         builder.retryOnConnectionFailure(true)
+//        builder.addInterceptor {
+//            val request = it.request()
+//            val response = it.proceed(request)
+//            val requestUrl = request.url().toString()
+//            val domain = request.url().host()
+//            // set-cookie maybe has multi, login to save cookie
+//            if ((requestUrl.contains(SAVE_USER_LOGIN_KEY) || requestUrl.contains(
+//                            SAVE_USER_REGISTER_KEY
+//                    ))
+//                    && !response.headers(SET_COOKIE_KEY).isEmpty()) {
+//                val cookies = response.headers(SET_COOKIE_KEY)
+//                val cookie = encodeCookie(cookies)
+//                saveCookie(requestUrl, domain, cookie)
+//            }
+//            response
+//        }
+//        // set request cookie
+//        builder.addInterceptor {
+//            val request = it.request()
+//            val builder = request.newBuilder()
+//            val domain = request.url().host()
+//            // get domain cookie
+//            if (domain.isNotEmpty()) {
+//                val spDomain: String by Preference(domain, "")
+//                val cookie: String = if (spDomain.isNotEmpty()) spDomain else ""
+//                if (cookie.isNotEmpty()) {
+//                    builder.addHeader(COOKIE_NAME, cookie)
+//                }
+//            }
+//            it.proceed(builder.build())
+//        }
+
         mOkHttpClient=builder.build()
+    }
+
+    @Suppress("ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE")
+    private fun saveCookie(url: String?, domain: String?, cookies: String) {
+        url ?: return
+        var spUrl: String by Preference(url, cookies)
+        @Suppress("UNUSED_VALUE")
+        spUrl = cookies
+        domain ?: return
+        var spDomain: String by Preference(domain, cookies)
+        @Suppress("UNUSED_VALUE")
+        spDomain = cookies
     }
 
     //日志打印
