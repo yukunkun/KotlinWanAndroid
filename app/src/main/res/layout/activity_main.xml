@@ -35,7 +35,7 @@
         <RadioGroup android:layout_width="match_parent"
             android:id="@+id/rg"
             android:orientation="horizontal"
-            android:weightSum="3"
+            android:weightSum="4"
             android:layout_height="50dp">
             <RadioButton
                 android:id="@+id/rb_index"
@@ -48,6 +48,17 @@
                 android:layout_height="wrap_content"
                 android:button="@null"
                 android:gravity="center"/>
+            <RadioButton
+                android:id="@+id/rb_wechat"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:text="公众"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textColor="@drawable/selector_main"
+                android:gravity="center"
+                android:layout_height="wrap_content"/>
             <RadioButton
                 android:id="@+id/rb_knowledge"
                 android:layout_width="0dp"

@@ -14,6 +14,7 @@ import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.fragment.HotFragment
 import com.yukun.kotlinwanandroid.fragment.IndexFragment
 import com.yukun.kotlinwanandroid.fragment.KnowledgeFragment
+import com.yukun.kotlinwanandroid.fragment.WeChatFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.log
 
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity() {
 
     override fun initUI() {
         mFragments.add(IndexFragment.getInstance())
+        mFragments.add(WeChatFragment.getInstance())
         mFragments.add(KnowledgeFragment.getInstance())
         mFragments.add(HotFragment.getInstance())
         beginTransaction = supportFragmentManager.beginTransaction()!!
@@ -53,14 +55,19 @@ class MainActivity : BaseActivity() {
                        (rg.getChildAt(0) as RadioButton).isChecked=true
                        showFragment(0)
                    }
-                    R.id.rb_knowledge -> {
-                       (rg.getChildAt(1) as RadioButton).isChecked=true
+                    R.id.rb_wechat -> {
+                        (rg.getChildAt(1) as RadioButton).isChecked=true
                         showFragment(1)
-                   }
-                    R.id.rb_mine -> {
+                    }
+                    R.id.rb_knowledge -> {
                        (rg.getChildAt(2) as RadioButton).isChecked=true
                         showFragment(2)
                    }
+                    R.id.rb_mine -> {
+                       (rg.getChildAt(3) as RadioButton).isChecked=true
+                        showFragment(3)
+                   }
+
                 }
             }
         })

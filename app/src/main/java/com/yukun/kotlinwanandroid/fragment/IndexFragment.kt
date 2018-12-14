@@ -100,13 +100,10 @@ class IndexFragment: BaseFragment() {
             }
         } )
 
-        iv_me.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v: View?) {
-                var intent=Intent(context,MineActivity::class.java)
-                startActivity(intent)
-            }
-
-        })
+        iv_me.setOnClickListener {
+            var intent=Intent(context,MineActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun initLayout(): Int {

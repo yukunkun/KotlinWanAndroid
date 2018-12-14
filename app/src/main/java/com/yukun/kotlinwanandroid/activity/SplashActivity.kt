@@ -3,12 +3,20 @@ package com.yukun.kotlinwanandroid.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
+import com.google.gson.Gson
+import com.yukun.kotlinwanandroid.MyApp
 import com.yukun.kotlinwanandroid.R
+import com.yukun.kotlinwanandroid.beans.UserBean
+import com.yukun.kotlinwanandroid.beans.UserInfo
+import com.yukun.kotlinwanandroid.utils.SPUtils
 import kotlinx.android.synthetic.main.activity_splash.*
+import org.litepal.LitePal
 import java.util.*
 
 class SplashActivity : AppCompatActivity() {
@@ -53,6 +61,11 @@ class SplashActivity : AppCompatActivity() {
 
     private fun initUI() {
         iv_bg.setBackgroundResource(imageList[nextInt])
+        //已经登录
+        val list = LitePal.findAll(UserBean::class.java)
+        if(list!=null&&list.size>0){
+            MyApp.getInstance()!!.userBean=list[0]
+        }
     }
 
     private fun initData() {

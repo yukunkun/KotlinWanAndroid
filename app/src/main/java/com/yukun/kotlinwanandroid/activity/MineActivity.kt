@@ -6,8 +6,12 @@ import android.os.Build
 import android.support.annotation.RequiresApi
 import android.view.View
 import com.yukun.kotlinwanandroid.BaseActivity
+import com.yukun.kotlinwanandroid.MyApp
 import com.yukun.kotlinwanandroid.R
+import com.yukun.kotlinwanandroid.beans.UserBean
+import com.yukun.kotlinwanandroid.dialog.AboutUsDialog
 import kotlinx.android.synthetic.main.activity_mine.*
+import org.litepal.LitePal
 
 class MineActivity : BaseActivity(), View.OnClickListener {
 
@@ -19,7 +23,10 @@ class MineActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun initUI() {
-
+        if(MyApp.getInstance()!!.userBean!=null){
+            tv_name.text= MyApp.getInstance()!!.userBean!!.username
+            tv_login.text="退出登录"
+        }
     }
 
     override fun initData() {
@@ -33,6 +40,13 @@ class MineActivity : BaseActivity(), View.OnClickListener {
         tv_login.setOnClickListener(this)
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        if(MyApp.getInstance()!!.userBean!=null){
+            tv_name.text= MyApp.getInstance()!!.userBean!!.username
+            tv_login.text="退出登录"
+        }
+    }
     override fun onClick(v: View?) {
 
         when(v!!.id){
@@ -42,15 +56,18 @@ class MineActivity : BaseActivity(), View.OnClickListener {
 
             }
             R.id.rl_adoutus ->{
-
+                val instance = AboutUsDialog.getInstance()
+                instance.show(supportFragmentManager,"")
             }
 
             R.id.tv_login ->{
-                if(true){
+                if(tv_login.text == "退出登录"){
+                    LitePal.deleteAll(UserBean::class.java)
+                    MyApp.getInstance()!!.userBean=null
+                    finish()
+                }else{
                     var intent=Intent(this,LoginActivity::class.java)
                     startActivity(intent)
-                }else{
-
                 }
             }
         }
