@@ -41,7 +41,6 @@ class RetrofitFactory {
         mRetrofitService!!.getKnowledgeList().enqueue(callBack)
     }
 
-
     fun login(username:String, password:String, callBack: BaseCallBack<UserBean>){
         mRetrofitService!!.login(username,password).enqueue(callBack)
     }
