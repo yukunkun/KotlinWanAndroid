@@ -86,7 +86,9 @@ class HotFragment(): BaseFragment() {
             tv.setBackgroundResource(R.drawable.shape_tag_back)
             taglayout.addView(tv)
             tv.setOnClickListener {
-                ToastUtils.show(tv.text.toString())
+                var intent=Intent(context, SearchActivity::class.java)
+                intent.putExtra("key",tv.text.toString())
+                startActivity(intent)
             }
         }
     }

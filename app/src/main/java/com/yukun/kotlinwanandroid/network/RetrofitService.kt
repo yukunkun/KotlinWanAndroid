@@ -66,6 +66,11 @@ interface RetrofitService {
     /**
      * search
      */
-    @GET("article/query/{page}/json")
+    @POST("article/query/{page}/json")
     fun search(@Path("page") page:Int,@Query("k") key:String):Call<HomeListResponse<Data>>
+    /**
+     * 体系详情
+     */
+    @GET("article/list/{page}/json")
+    fun getKnowledgeArtical( @Path("page") page:Int,@Query("cid") cid :Int):Call<HomeListResponse<Data>>
 }

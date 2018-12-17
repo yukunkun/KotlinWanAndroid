@@ -3,6 +3,7 @@ package com.yukun.kotlinwanandroid.adapter
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,8 @@ class RVIndexAdapter(mListData : List<Data.Datas>,context:Context?) :RecyclerVie
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is MyHolder){
             holder.itemView.tv_name.text= mListData!![position].chapterName
-            holder.itemView.tv_content.text= mListData!![position].title
+            //有标签
+            holder.itemView.tv_content.text= Html.fromHtml(mListData!![position].title)
             holder.itemView.tv_time.text=mListData!![position].niceDate
             holder.itemView.tv_class.text=mListData!![position].chapterName
             val nextInt = random!!.nextInt(mList.size)

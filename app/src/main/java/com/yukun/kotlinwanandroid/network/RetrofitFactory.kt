@@ -67,4 +67,8 @@ class RetrofitFactory {
     fun search(page:Int,key:String, callBack: BaseCallBack<Data>){
         mRetrofitService!!.search(page,key).enqueue(callBack)
     }
+
+    fun knowledgeDetail(page:Int,cid:Int, callBack: BaseCallBack<Data>){
+        mRetrofitService!!.getKnowledgeArtical(page,cid).enqueue(callBack)
+    }
 }
