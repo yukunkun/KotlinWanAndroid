@@ -19,20 +19,21 @@
         android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_height="50dp">
-        <!--<com.yukun.kotlinwanandroid.view.BMoveViewKotlin
+        <com.yukun.kotlinwanandroid.view.BMoveView
             android:id="@+id/bmoveview"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            yk:circleColor="@color/color_fd4040"
+            />
+        <!--yk:circleColor="@color/color_fd4040"
             yk:lineColor="@color/color_fd4040"
             yk:lineDuration="150"
             yk:lineWidth="3"
-            yk:buttonCount="3"
+            yk:buttonCount="4"
             yk:circleDuration="500"
             yk:circleCenterColor="#FFFFFF"
-            yk:circleRadio="20"
-            />-->
-        <RadioGroup android:layout_width="match_parent"
+            yk:circleRadio="20"-->
+        <RadioGroup
+            android:layout_width="match_parent"
             android:id="@+id/rg"
             android:orientation="horizontal"
             android:weightSum="4"

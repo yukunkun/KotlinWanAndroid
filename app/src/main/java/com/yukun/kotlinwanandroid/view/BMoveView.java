@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.yukun.kotlinwanandroid.R;
+
 /**
  * Created by yukun on 18-11-12.
  */
@@ -53,6 +55,13 @@ public class BMoveView extends View {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+        mCircleColor=getResources().getColor(R.color.color_fd4040);
+        mLineColor=getResources().getColor(R.color.color_fd4040);
+        mLineDuration=150;
+        mLineWidth=3;
+        mCircleDuration=500;
+        mCirclemRadio=20;
+
 //
 //        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.BMoveView, defStyleAttr, 0);
 //
@@ -153,7 +162,7 @@ public class BMoveView extends View {
         mPaintLine.setAntiAlias(true);
         mPaintLine.setStyle(Paint.Style.FILL);
         //可以画内圆圈的颜色
-        canvas.drawArc(mRectF,90,mRoationx,true,mPaintLine);
+//        canvas.drawArc(mRectF,90,mRoationx,true,mPaintLine);
         //画线条
         mPaintLine.setColor(mLineColor);
         mPaintLine.setStrokeWidth(mRadio);

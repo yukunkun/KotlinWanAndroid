@@ -22,6 +22,9 @@ class MainActivity : BaseActivity() {
     var beginTransaction : FragmentTransaction ?=null
     var mFragments= mutableListOf<Fragment>()
     var lastpos : Int = 0
+    var mLastPos : Int = 0
+    var mFirstPos : Int = 0
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initLayout(): Int {
@@ -48,26 +51,20 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initListener() {
+        bmoveview.setButonCount(4)
+        bmoveview.startAnim()
         rg.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                when(checkedId){
-                   R.id.rb_index -> {
-                       (rg.getChildAt(0) as RadioButton).isChecked=true
-                       showFragment(0)
-                   }
-                    R.id.rb_wechat -> {
-                        (rg.getChildAt(1) as RadioButton).isChecked=true
-                        showFragment(1)
+                for (i in 0 until group!!.getChildCount()) {
+                    val checked = (group!!.getChildAt(i) as RadioButton).isChecked
+                    if (checked) {
+                        mLastPos = i
+                        bmoveview.setTwoPos(mFirstPos, mLastPos)
+                        mFirstPos = mLastPos
+                        //位置
+                        (rg.getChildAt(i) as RadioButton).isChecked=true
+                        showFragment(i)
                     }
-                    R.id.rb_knowledge -> {
-                       (rg.getChildAt(2) as RadioButton).isChecked=true
-                        showFragment(2)
-                   }
-                    R.id.rb_mine -> {
-                       (rg.getChildAt(3) as RadioButton).isChecked=true
-                        showFragment(3)
-                   }
-
                 }
             }
         })
