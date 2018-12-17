@@ -7,9 +7,10 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.activity.DetailActivity
-import kotlinx.android.synthetic.main.index_item.view.*
+import kotlinx.android.synthetic.main.project_item.view.*
 import top.jowanxu.wanandroidclient.bean.Data
 import java.util.*
 
@@ -17,14 +18,14 @@ import java.util.*
  * author: kun .
  * date:   On 2018/12/13
  */
-class RVIndexAdapter(mListData : List<Data.Datas>,context:Context?) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RVProjectAdapter(mListData : List<Data.Datas>, context:Context?) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var mListData : List<Data.Datas> ?=mListData
     private var context=context
     var random : Random=Random()
     internal var mList = arrayOf(R.color.color_2b2b2b, R.color.color_2e4eef, R.color.colorPrimary, R.color.color_ff2323, R.color.color_ff01bb, R.color.color_ff4081, R.color.color_ffe100, R.color.color_30f209, R.color.color_30f209)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
-        var view=LayoutInflater.from(context).inflate(R.layout.index_item,null)
+        var view=LayoutInflater.from(context).inflate(R.layout.project_item,null)
         return MyHolder(view)
     }
 
@@ -36,9 +37,11 @@ class RVIndexAdapter(mListData : List<Data.Datas>,context:Context?) :RecyclerVie
         if(holder is MyHolder){
             holder.itemView.tv_name.text= mListData!![position].author
             //有标签
-            holder.itemView.tv_content.text= Html.fromHtml(mListData!![position].title)
+            holder.itemView.tv_content.text= mListData!![position].desc
             holder.itemView.tv_time.text=mListData!![position].niceDate
             holder.itemView.tv_class.text=mListData!![position].chapterName
+            holder.itemView.tv_introduce.text=mListData!![position].title
+            Glide.with(context).load(mListData!![position].envelopePic).into(holder.itemView.iv_cover)
             val nextInt = random!!.nextInt(mList.size)
             holder.itemView.tv_name.setTextColor(context!!.resources.getColor(mList[nextInt]))
             holder.itemView.setOnClickListener(object :View.OnClickListener{
@@ -49,14 +52,11 @@ class RVIndexAdapter(mListData : List<Data.Datas>,context:Context?) :RecyclerVie
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context!!.startActivity(intent)
                 }
-
             })
         }
     }
 
     class MyHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!){
-
-//        private var tv_name :TextView = itemView!!.findViewById(R.id.tv_name)
 
     }
 }

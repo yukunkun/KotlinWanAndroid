@@ -73,4 +73,11 @@ interface RetrofitService {
      */
     @GET("article/list/{page}/json")
     fun getKnowledgeArtical( @Path("page") page:Int,@Query("cid") cid :Int):Call<HomeListResponse<Data>>
+    /**
+     * 项目
+     *
+     */
+    @GET("article/listproject/{page}/json")
+    fun getProject( @Path("page") page:Int):Call<HomeListResponse<Data>>
+
 }

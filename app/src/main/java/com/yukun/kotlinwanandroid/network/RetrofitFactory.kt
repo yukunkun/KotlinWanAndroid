@@ -71,4 +71,8 @@ class RetrofitFactory {
     fun knowledgeDetail(page:Int,cid:Int, callBack: BaseCallBack<Data>){
         mRetrofitService!!.getKnowledgeArtical(page,cid).enqueue(callBack)
     }
+
+    fun projectDetail(page:Int, callBack: BaseCallBack<Data>){
+        mRetrofitService!!.getProject(page).enqueue(callBack)
+    }
 }

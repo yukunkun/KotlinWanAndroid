@@ -11,10 +11,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.yukun.kotlinwanandroid.BaseActivity
 import com.yukun.kotlinwanandroid.R
-import com.yukun.kotlinwanandroid.fragment.HotFragment
-import com.yukun.kotlinwanandroid.fragment.IndexFragment
-import com.yukun.kotlinwanandroid.fragment.KnowledgeFragment
-import com.yukun.kotlinwanandroid.fragment.WeChatFragment
+import com.yukun.kotlinwanandroid.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.log
 
@@ -25,7 +22,6 @@ class MainActivity : BaseActivity() {
     var mLastPos : Int = 0
     var mFirstPos : Int = 0
 
-
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initLayout(): Int {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -35,6 +31,7 @@ class MainActivity : BaseActivity() {
 
     override fun initUI() {
         mFragments.add(IndexFragment.getInstance())
+        mFragments.add(ProjectFragment.getInstance())
         mFragments.add(WeChatFragment.getInstance())
         mFragments.add(KnowledgeFragment.getInstance())
         mFragments.add(HotFragment.getInstance())
@@ -51,7 +48,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initListener() {
-        bmoveview.setButonCount(4)
+        bmoveview.setButonCount(5)
         bmoveview.startAnim()
         rg.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {

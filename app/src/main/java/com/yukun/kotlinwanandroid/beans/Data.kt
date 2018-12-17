@@ -21,7 +21,7 @@ data class Data(
             var origin: Any,
             var publishTime: Long,
             var zan: Any,
-            var desc: Any,
+            var desc: String,
             var visible: Int,
             var niceDate: String,
             var courseId: Int,
