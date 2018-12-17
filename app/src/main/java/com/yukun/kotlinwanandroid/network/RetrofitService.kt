@@ -53,7 +53,19 @@ interface RetrofitService {
     @GET("friend/json")
     fun getCommentNet() : Call<HomeListResponse<List<CommentNet>>>
 
+    /**
+     * 公众号
+     */
     @GET("wxarticle/chapters/json")
     fun getWeChat():Call<HomeListResponse<List<WeChatBean>>>
-
+    /**
+     * 公众号文章
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    fun getWeChatArtical(@Path("id") id :Int, @Path("page") page:Int):Call<HomeListResponse<WeChatDetailBean>>
+    /**
+     * search
+     */
+    @GET("article/query/{page}/json")
+    fun search(@Path("page") page:Int,@Query("k") key:String):Call<HomeListResponse<Data>>
 }

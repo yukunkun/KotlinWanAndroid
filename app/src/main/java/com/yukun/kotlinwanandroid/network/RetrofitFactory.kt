@@ -1,7 +1,6 @@
 package com.yukun.kotlinwanandroid.network
 
 import com.yukun.kotlinwanandroid.beans.*
-import com.yukun.kotlinwanandroid.fragment.HotFragment
 import retrofit2.Callback
 import top.jowanxu.wanandroidclient.bean.Data
 
@@ -59,5 +58,13 @@ class RetrofitFactory {
 
     fun weChatChapter(callBack: BaseCallBack<List<WeChatBean>>){
         mRetrofitService!!.getWeChat().enqueue(callBack)
+    }
+
+    fun weChatArticle(id:Int, page:Int, callBack: BaseCallBack<WeChatDetailBean>){
+        mRetrofitService!!.getWeChatArtical(id,page).enqueue(callBack)
+    }
+
+    fun search(page:Int,key:String, callBack: BaseCallBack<Data>){
+        mRetrofitService!!.search(page,key).enqueue(callBack)
     }
 }

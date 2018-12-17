@@ -11,6 +11,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.yukun.kotlinwanandroid.BaseFragment
 import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.activity.MineActivity
+import com.yukun.kotlinwanandroid.activity.SearchActivity
 import com.yukun.kotlinwanandroid.adapter.RVIndexAdapter
 import com.yukun.kotlinwanandroid.beans.HomeListResponse
 import com.yukun.kotlinwanandroid.network.BaseCallBack
@@ -102,6 +103,10 @@ class IndexFragment: BaseFragment() {
 
         iv_me.setOnClickListener {
             var intent=Intent(context,MineActivity::class.java)
+            startActivity(intent)
+        }
+        iv_search.setOnClickListener {
+            var intent=Intent(context,SearchActivity::class.java)
             startActivity(intent)
         }
     }

@@ -10,6 +10,7 @@ import com.yukun.kotlinwanandroid.BaseFragment
 import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.activity.DetailActivity
 import com.yukun.kotlinwanandroid.activity.MineActivity
+import com.yukun.kotlinwanandroid.activity.SearchActivity
 import com.yukun.kotlinwanandroid.adapter.LVAdapter
 import com.yukun.kotlinwanandroid.beans.CommentNet
 import com.yukun.kotlinwanandroid.beans.HomeListResponse
@@ -93,6 +94,10 @@ class HotFragment(): BaseFragment() {
     override fun initListener() {
         iv_me.setOnClickListener {
             var intent= Intent(context, MineActivity::class.java)
+            startActivity(intent)
+        }
+        iv_search.setOnClickListener {
+            var intent=Intent(context, SearchActivity::class.java)
             startActivity(intent)
         }
         listview.setOnItemClickListener { parent, view, position, id ->
