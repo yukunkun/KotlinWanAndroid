@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
@@ -13,25 +14,29 @@ import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.activity.MineActivity
 import com.yukun.kotlinwanandroid.activity.SearchActivity
 import com.yukun.kotlinwanandroid.adapter.RVIndexAdapter
+import com.yukun.kotlinwanandroid.adapter.RVIndexBannerAdapter
+import com.yukun.kotlinwanandroid.beans.BannerBean
 import com.yukun.kotlinwanandroid.beans.HomeListResponse
+import com.yukun.kotlinwanandroid.impl.CollectClickCallBack
 import com.yukun.kotlinwanandroid.network.BaseCallBack
 import com.yukun.kotlinwanandroid.network.RetrofitFactory
 import com.yukun.kotlinwanandroid.utils.ToastUtils
 import kotlinx.android.synthetic.main.index_fragment.*
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import top.jowanxu.wanandroidclient.bean.Data
-import java.util.*
 
 /**
  * author: kun .
  * date:   On 2018/12/12
  */
 class IndexFragment: BaseFragment() {
-
     var page=0
     var mDataList= mutableListOf<Data.Datas>()
+    var mDataBanner= mutableListOf<BannerBean>()
     var linlayoutManager:LinearLayoutManager?=null
-    var indexRvAdapter:RVIndexAdapter?=null
+    var indexRvAdapter: RVIndexBannerAdapter?=null
 
     companion object {
         var indexFragment : IndexFragment ?= null
@@ -44,7 +49,7 @@ class IndexFragment: BaseFragment() {
     override fun initUI(inflate: View, savedInstanceState: Bundle?) {
         linlayoutManager= LinearLayoutManager(context)
         recyclerview.layoutManager=linlayoutManager
-        indexRvAdapter= RVIndexAdapter(mDataList, context)
+        indexRvAdapter= RVIndexBannerAdapter(mDataList,mDataBanner, context)
         recyclerview.adapter=indexRvAdapter
         refreshLayout.setPrimaryColors(Color.WHITE, Color.BLUE)
         refreshLayout.setBackgroundResource(R.color.colorPrimary)
@@ -61,16 +66,30 @@ class IndexFragment: BaseFragment() {
 //            }
 //        })
 
+        RetrofitFactory.getInstance().getBanner(object : BaseCallBack<List<BannerBean>>{
+            override fun onSuccess(data: List<BannerBean>) {
+                mDataBanner.addAll(data)
+            }
+
+            override fun onBadRespone(msg: String) {
+            }
+
+            override fun onFailture(call: Call<HomeListResponse<List<BannerBean>>>?, t: Throwable?) {
+            }
+
+        })
+
         RetrofitFactory.getInstance().getIndexList(page,object : BaseCallBack<Data>{
             override fun onSuccess(data: Data) {
                 //.toMutableList()转换成可变集合，再调用addAll
                 mDataList.addAll(data.datas!!.toMutableList())
                 //完成
                 if (page == 0) {
-                    refreshLayout.finishRefresh()
+                    refreshLayout!!.finishRefresh()
                 } else {
-                    refreshLayout.finishLoadmore()
+                    refreshLayout!!.finishLoadmore()
                 }
+                av_load.visibility=View.GONE
                 indexRvAdapter!!.notifyDataSetChanged()
             }
 
@@ -109,10 +128,44 @@ class IndexFragment: BaseFragment() {
             var intent=Intent(context,SearchActivity::class.java)
             startActivity(intent)
         }
+
+        indexRvAdapter!!.getmClickCallBack(object :CollectClickCallBack{
+            override fun clickCallBack(originId: Int, id: Int, isCollect: Boolean) {
+                if(!isCollect){
+                    addCollect(originId,id)
+                }else{
+                    removeCollect(originId,id)
+                }
+            }
+        })
+    }
+
+    private fun addCollect(originId: Int, id: Int) {
+        RetrofitFactory.getInstance().addCollect(originId,id,object :Callback<Response<String>>{
+            override fun onFailure(call: Call<Response<String>>?, t: Throwable?) {
+                Log.i("===========",t.toString())
+            }
+
+            override fun onResponse(call: Call<Response<String>>?, response: Response<Response<String>>?) {
+//                Log.i("===========", response!!.body().toString())
+                ToastUtils.show("收藏成功")
+            }
+        })
+    }
+
+    private fun removeCollect(originId: Int, id: Int) {
+        RetrofitFactory.getInstance().removeCollect(originId,id,object :Callback<Response<String>>{
+            override fun onFailure(call: Call<Response<String>>?, t: Throwable?) {
+                Log.i("===========remove",t.toString())
+            }
+
+            override fun onResponse(call: Call<Response<String>>?, response: Response<Response<String>>?) {
+//                Log.i("===========remove", response!!.body().toString())
+            }
+        })
     }
 
     override fun initLayout(): Int {
         return R.layout.index_fragment
     }
-
 }

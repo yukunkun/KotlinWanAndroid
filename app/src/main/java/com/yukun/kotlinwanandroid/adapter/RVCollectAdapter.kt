@@ -21,11 +21,11 @@ import java.util.*
  * author: kun .
  * date:   On 2018/12/13
  */
-class RVIndexAdapter(mListData : List<Data.Datas>,context:Context?) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var mListData : List<Data.Datas> ?=mListData
+class RVCollectAdapter(mListDatas : List<Data.Datas>, context:Context?) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var mListData = mListDatas
     private var context=context
     var random : Random=Random()
-    internal var mList = arrayOf(R.color.color_2b2b2b, R.color.color_2e4eef, R.color.colorPrimary, R.color.color_ff2323, R.color.color_ff01bb, R.color.color_ff4081, R.color.color_ffe100, R.color.color_30f209, R.color.color_30f209)
+    var mList = arrayOf(R.color.color_2b2b2b, R.color.color_2e4eef, R.color.colorPrimary, R.color.color_ff2323, R.color.color_ff01bb, R.color.color_ff4081, R.color.color_ffe100, R.color.color_30f209, R.color.color_30f209)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
         var view=LayoutInflater.from(context).inflate(R.layout.index_item,null)
@@ -43,11 +43,8 @@ class RVIndexAdapter(mListData : List<Data.Datas>,context:Context?) :RecyclerVie
             holder.itemView.tv_content.text= Html.fromHtml(mListData!![position].title)
             holder.itemView.tv_time.text=mListData!![position].niceDate
             holder.itemView.tv_class.text=mListData!![position].chapterName
-            if(mListData!![position].collect){
-                holder.itemView.iv_collect.setImageResource(R.mipmap.collection_fill)
-            }else{
-                holder.itemView.iv_collect.setImageResource(R.mipmap.collection)
-            }
+            holder.itemView.iv_collect.setImageResource(R.mipmap.collection_fill)
+
             val nextInt = random!!.nextInt(mList.size)
             holder.itemView.tv_name.setTextColor(context!!.resources.getColor(mList[nextInt]))
             holder.itemView.setOnClickListener(object :View.OnClickListener{
@@ -61,13 +58,7 @@ class RVIndexAdapter(mListData : List<Data.Datas>,context:Context?) :RecyclerVie
             })
             holder.itemView.iv_collect.setOnClickListener {
                 if(MyApp.getInstance()!!.userBean!=null){
-                    if(mListData!![position].collect){
-                        holder.itemView.iv_collect.setImageResource(R.mipmap.collection)
-                    }else{
-                        holder.itemView.iv_collect.setImageResource(R.mipmap.collection_fill)
-                    }
                     mClickCallBack!!.clickCallBack(mListData!![position].originId,mListData!![position].id,mListData!![position].collect)
-                    mListData!![position].collect=!mListData!![position].collect
                 }else{
                     ToastUtils.show("请先登录")
                 }

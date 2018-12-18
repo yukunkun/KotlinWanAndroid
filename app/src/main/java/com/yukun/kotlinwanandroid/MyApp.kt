@@ -3,6 +3,7 @@ package com.yukun.kotlinwanandroid
 import android.app.Application
 import com.yukun.kotlinwanandroid.beans.UserBean
 import com.yukun.kotlinwanandroid.beans.UserInfo
+import com.yukun.kotlinwanandroid.utils.Preference
 import org.litepal.LitePal
 
 /**
@@ -21,6 +22,7 @@ class MyApp : Application() {
         super.onCreate()
         myApp=this
         LitePal.initialize(this)
+        Preference.setContext(this)
     }
 
     fun getMyApplication():MyApp{

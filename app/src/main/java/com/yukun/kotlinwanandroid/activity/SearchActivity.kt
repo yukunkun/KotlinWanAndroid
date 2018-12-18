@@ -10,11 +10,14 @@ import com.yukun.kotlinwanandroid.BaseActivity
 import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.adapter.RVIndexAdapter
 import com.yukun.kotlinwanandroid.beans.HomeListResponse
+import com.yukun.kotlinwanandroid.impl.CollectClickCallBack
 import com.yukun.kotlinwanandroid.network.BaseCallBack
 import com.yukun.kotlinwanandroid.network.RetrofitFactory
 import com.yukun.kotlinwanandroid.utils.ToastUtils
 import kotlinx.android.synthetic.main.activity_search.*
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import top.jowanxu.wanandroidclient.bean.Data
 
 class SearchActivity : BaseActivity() {
@@ -104,7 +107,39 @@ class SearchActivity : BaseActivity() {
             }else{
                 ToastUtils.show("搜索不能为空")
             }
-
         }
+        indexRvAdapter!!.getmClickCallBack(object : CollectClickCallBack {
+            override fun clickCallBack(originId: Int, id: Int, isCollect: Boolean) {
+                if(!isCollect){
+                    addCollect(originId,id)
+                }else{
+                    removeCollect(originId,id)
+                }
+            }
+        })
     }
+
+    private fun addCollect(originId: Int, id: Int) {
+        RetrofitFactory.getInstance().addCollect(originId,id,object :Callback<Response<String>>{
+            override fun onFailure(call: Call<Response<String>>?, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<Response<String>>?, response: Response<Response<String>>?) {
+//                Log.i("===========", response!!.body().toString())
+                ToastUtils.show("收藏成功")
+            }
+        })
+    }
+
+    private fun removeCollect(originId: Int, id: Int) {
+        RetrofitFactory.getInstance().removeCollect(originId,id,object : Callback<Response<String>> {
+            override fun onFailure(call: Call<Response<String>>?, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<Response<String>>?, response: Response<Response<String>>?) {
+//                Log.i("===========remove", response!!.body().toString())
+            }
+        })
+    }
+
 }

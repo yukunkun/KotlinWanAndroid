@@ -10,6 +10,8 @@ import com.yukun.kotlinwanandroid.MyApp
 import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.beans.UserBean
 import com.yukun.kotlinwanandroid.dialog.AboutUsDialog
+import com.yukun.kotlinwanandroid.utils.Preference
+import com.yukun.kotlinwanandroid.utils.ToastUtils
 import kotlinx.android.synthetic.main.activity_mine.*
 import org.litepal.LitePal
 
@@ -53,7 +55,15 @@ class MineActivity : BaseActivity(), View.OnClickListener {
             R.id.iv_back -> finish()
 
             R.id.rl_collect ->{
+                if(tv_login.text == "退出登录"){
+                    var intent=Intent(this,CollectActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    ToastUtils.show("请先登录")
+                    var intent=Intent(this,LoginActivity::class.java)
+                    startActivity(intent)
 
+                }
             }
             R.id.rl_adoutus ->{
                 val instance = AboutUsDialog.getInstance()
@@ -64,6 +74,7 @@ class MineActivity : BaseActivity(), View.OnClickListener {
                 if(tv_login.text == "退出登录"){
                     LitePal.deleteAll(UserBean::class.java)
                     MyApp.getInstance()!!.userBean=null
+                    Preference.clear()
                     finish()
                 }else{
                     var intent=Intent(this,LoginActivity::class.java)

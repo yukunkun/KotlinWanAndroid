@@ -1,61 +1,48 @@
-package com.yukun.kotlinwanandroid.fragment
+package com.yukun.kotlinwanandroid.activity
 
+import android.app.ProgressDialog
 import android.graphics.Color
-import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
-import com.yukun.kotlinwanandroid.BaseFragment
+import android.util.Log
+import android.widget.ProgressBar
+import com.yukun.kotlinwanandroid.BaseActivity
 import com.yukun.kotlinwanandroid.R
+import com.yukun.kotlinwanandroid.adapter.RVCollectAdapter
 import com.yukun.kotlinwanandroid.adapter.RVIndexAdapter
 import com.yukun.kotlinwanandroid.beans.HomeListResponse
 import com.yukun.kotlinwanandroid.impl.CollectClickCallBack
 import com.yukun.kotlinwanandroid.network.BaseCallBack
 import com.yukun.kotlinwanandroid.network.RetrofitFactory
 import com.yukun.kotlinwanandroid.utils.ToastUtils
-import kotlinx.android.synthetic.main.activity_knowledge.*
-import kotlinx.android.synthetic.main.wechat_detail_fragment.*
+import kotlinx.android.synthetic.main.activity_collect.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import top.jowanxu.wanandroidclient.bean.Data
-import kotlin.concurrent.fixedRateTimer
 
-/**
- * author: kun .
- * date:   On 2018/12/17
- */
-class KnowledgeDatailFragment : BaseFragment() {
-    var cid:Int?=null
+class CollectActivity : BaseActivity() {
     var page=0
     var datas= mutableListOf<Data.Datas>()
-    var adapter:RVIndexAdapter?=null
-    companion object {
-        var detailfragment :KnowledgeDatailFragment?=null
-        fun getInstance(): KnowledgeDatailFragment? {
-            detailfragment= KnowledgeDatailFragment()
-            return detailfragment
-        }
-    }
-
-    fun getData(cid :Int){
-        this.cid= cid
-    }
-
+    var adapter: RVCollectAdapter?=null
+    var progressbar:ProgressDialog?= null
     override fun initLayout(): Int {
-        return R.layout.wechat_detail_fragment
+        return R.layout.activity_collect
     }
 
-    override fun initUI(inflate: View, savedInstanceState: Bundle?) {
+    override fun initUI() {
+        progressbar=ProgressDialog(this)
+        progressbar!!.setMessage("加载中。。。")
+        progressbar!!.show()
         smartrefreshlayout.setPrimaryColors(Color.WHITE, Color.BLUE)
         smartrefreshlayout.setBackgroundResource(R.color.colorPrimary)
-        val linearLayoutManager = LinearLayoutManager(context)
+        val linearLayoutManager = LinearLayoutManager(this)
         recyclerview.layoutManager=linearLayoutManager
-        adapter= RVIndexAdapter(datas,context)
+        adapter= RVCollectAdapter(datas,this)
         recyclerview.adapter=adapter
     }
 
     override fun initData() {
-        RetrofitFactory.getInstance().knowledgeDetail(page, cid!!,object :BaseCallBack<Data>{
+        RetrofitFactory.getInstance().collectList(page,object :BaseCallBack<Data>{
             override fun onSuccess(data: Data) {
                 datas.addAll(data.datas!!.toMutableList())
                 adapter!!.notifyDataSetChanged()
@@ -64,6 +51,7 @@ class KnowledgeDatailFragment : BaseFragment() {
                 }else{
                     smartrefreshlayout.finishLoadmore()
                 }
+                progressbar!!.dismiss()
             }
 
             override fun onBadRespone(msg: String) {
@@ -85,38 +73,27 @@ class KnowledgeDatailFragment : BaseFragment() {
             datas.clear()
             initData()
         }
+        iv_back.setOnClickListener {
+            finish()
+        }
         adapter!!.getmClickCallBack(object : CollectClickCallBack {
             override fun clickCallBack(originId: Int, id: Int, isCollect: Boolean) {
-                if(!isCollect){
-                    addCollect(originId,id)
-                }else{
-                    removeCollect(originId,id)
-                }
-            }
-        })
-    }
-
-    private fun addCollect(originId: Int, id: Int) {
-        RetrofitFactory.getInstance().addCollect(originId,id,object : Callback<Response<String>> {
-            override fun onFailure(call: Call<Response<String>>?, t: Throwable?) {
-            }
-
-            override fun onResponse(call: Call<Response<String>>?, response: Response<Response<String>>?) {
-//                Log.i("===========", response!!.body().toString())
-                ToastUtils.show("收藏成功")
+                removeCollect(originId,id)
             }
         })
     }
 
     private fun removeCollect(originId: Int, id: Int) {
+        progressbar!!.show()
         RetrofitFactory.getInstance().removeCollect(originId,id,object :Callback<Response<String>>{
             override fun onFailure(call: Call<Response<String>>?, t: Throwable?) {
             }
 
             override fun onResponse(call: Call<Response<String>>?, response: Response<Response<String>>?) {
-//                Log.i("===========remove", response!!.body().toString())
+                ToastUtils.show("取消收藏成功")
+                initData()
             }
+
         })
     }
-
 }

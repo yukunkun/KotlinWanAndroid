@@ -58,7 +58,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     private fun login(name:String,password:String) {
         RetrofitFactory.getInstance().login(name,password,object :BaseCallBack<UserBean>{
             override fun onSuccess(data: UserBean) {
-                Log.i("=============s",data.toString())
+//                Log.i("=============s",data.toString())
                 ToastUtils.show(this@LoginActivity,"登录成功")
                 saveUserInfo(data)
             }

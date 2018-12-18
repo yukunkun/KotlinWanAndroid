@@ -2,6 +2,7 @@ package com.yukun.kotlinwanandroid.network
 
 import com.yukun.kotlinwanandroid.beans.*
 import retrofit2.Callback
+import retrofit2.Response
 import top.jowanxu.wanandroidclient.bean.Data
 
 /**
@@ -30,6 +31,10 @@ class RetrofitFactory {
 
     fun getIndexListCall(page: Int,callBack : Callback<HomeListResponse<Data>>){
         mRetrofitService!!.getIndexListCall(page).enqueue(callBack)
+    }
+
+    fun getBanner(callBack: BaseCallBack<List<BannerBean>>){
+        mRetrofitService!!.banner().enqueue(callBack)
     }
 
     fun getIndexList(page: Int, callBack: BaseCallBack<Data>){
@@ -74,5 +79,17 @@ class RetrofitFactory {
 
     fun projectDetail(page:Int, callBack: BaseCallBack<Data>){
         mRetrofitService!!.getProject(page).enqueue(callBack)
+    }
+
+    fun collectList(page:Int, callBack: BaseCallBack<Data>){
+        mRetrofitService!!.collectlist(page).enqueue(callBack)
+    }
+
+    fun addCollect(originId:Int, id:Int, callBack: Callback<Response<String>>){
+        mRetrofitService!!.addCollect(id,originId).enqueue(callBack)
+    }
+
+    fun removeCollect(originId:Int,id:Int, callBack: Callback<Response<String>>){
+        mRetrofitService!!.removeCollect(id,originId).enqueue(callBack)
     }
 }

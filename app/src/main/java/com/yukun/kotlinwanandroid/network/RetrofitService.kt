@@ -2,6 +2,7 @@ package com.yukun.kotlinwanandroid.network
 
 import com.yukun.kotlinwanandroid.beans.*
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -17,6 +18,12 @@ interface RetrofitService {
     @GET("article/list/{page}/json")
     fun getIndexListCall(@Path("page") page:Int) : Call<HomeListResponse<Data>>
 
+    /**
+     * banner
+     *
+     */
+    @GET("banner/json")
+    fun banner():Call<HomeListResponse<List<BannerBean>>>
     /**
      * 首页列表
      */
@@ -79,5 +86,20 @@ interface RetrofitService {
      */
     @GET("article/listproject/{page}/json")
     fun getProject( @Path("page") page:Int):Call<HomeListResponse<Data>>
-
+    /**
+     * 收藏列表
+     *
+     */
+    @GET("lg/collect/list/{page}/json")
+    fun  collectlist(@Path("page") page:Int):Call<HomeListResponse<Data>>
+    /**
+     * 添加收藏
+     */
+    @POST("lg/collect/{id}/json")
+    fun addCollect(@Path("id") id:Int,@Query("originId") originId:Int):Call<Response<String>>
+    /**
+     * 取消收藏
+     */
+    @POST("lg/uncollect/{id}/json")
+    fun removeCollect(@Path("id") id:Int,@Query("originId") originId:Int):Call<Response<String>>
 }

@@ -6,9 +6,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.yukun.kotlinwanandroid.MyApp
 import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.activity.DetailActivity
 import com.yukun.kotlinwanandroid.beans.WeChatDetailBean
+import com.yukun.kotlinwanandroid.impl.CollectClickCallBack
+import com.yukun.kotlinwanandroid.utils.ToastUtils
 import kotlinx.android.synthetic.main.index_item.view.*
 import top.jowanxu.wanandroidclient.bean.Data
 import java.util.*
@@ -38,6 +41,11 @@ class RVWeChatAdapter(mListData : List<WeChatDetailBean.WeChatDetailBeans>, cont
             holder.itemView.tv_content.text= mListData!![position].title
             holder.itemView.tv_time.text=mListData!![position].niceDate
             holder.itemView.tv_class.text=mListData!![position].chapterName
+            if(mListData!![position].collect){
+                holder.itemView.iv_collect.setImageResource(R.mipmap.collection_fill)
+            }else{
+                holder.itemView.iv_collect.setImageResource(R.mipmap.collection)
+            }
             val nextInt = random!!.nextInt(mList.size)
             holder.itemView.tv_name.setTextColor(context!!.resources.getColor(mList[nextInt]))
             holder.itemView.setOnClickListener(object :View.OnClickListener{
@@ -49,12 +57,29 @@ class RVWeChatAdapter(mListData : List<WeChatDetailBean.WeChatDetailBeans>, cont
                     context!!.startActivity(intent)
                 }
             })
+
+            holder.itemView.iv_collect.setOnClickListener {
+                if(MyApp.getInstance()!!.userBean!=null){
+                    if(mListData!![position].collect){
+                        holder.itemView.iv_collect.setImageResource(R.mipmap.collection)
+                    }else{
+                        holder.itemView.iv_collect.setImageResource(R.mipmap.collection_fill)
+                    }
+                    mClickCallBack!!.clickCallBack(mListData!![position].originId,mListData!![position].id,mListData!![position].collect)
+                    mListData!![position].collect=!mListData!![position].collect
+                }else{
+                    ToastUtils.show("请先登录")
+                }
+            }
         }
     }
 
     class MyHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!){
-
 //        private var tv_name :TextView = itemView!!.findViewById(R.id.tv_name)
+    }
 
+    var mClickCallBack: CollectClickCallBack?=null
+    fun getmClickCallBack(mClickCallBack:CollectClickCallBack){
+        this.mClickCallBack=mClickCallBack
     }
 }
