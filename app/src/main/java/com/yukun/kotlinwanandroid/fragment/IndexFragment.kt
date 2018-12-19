@@ -68,7 +68,6 @@ class IndexFragment: BaseFragment() {
 
         RetrofitFactory.getInstance().getBanner(object : BaseCallBack<List<BannerBean>>{
             override fun onSuccess(data: List<BannerBean>) {
-                Log.i("========d",data.toString())
                 mDataBanner.addAll(data)
                 getIndexData()
             }
@@ -173,5 +172,10 @@ class IndexFragment: BaseFragment() {
 
     override fun initLayout(): Int {
         return R.layout.index_fragment
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        indexRvAdapter!!.flag=false
     }
 }

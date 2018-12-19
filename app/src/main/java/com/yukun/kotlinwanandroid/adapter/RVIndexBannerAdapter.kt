@@ -33,7 +33,9 @@ class RVIndexBannerAdapter(mListData : List<Data.Datas>,mListBanner : List<Banne
     private var context=context
     var random : Random=Random()
     var count=0
+    var th:Thread?=null
     var handler =Handler()
+    var flag=true
     internal var mList = arrayOf(R.color.color_2b2b2b, R.color.color_2e4eef, R.color.colorPrimary, R.color.color_ff2323, R.color.color_ff01bb, R.color.color_ff4081, R.color.color_ffe100, R.color.color_30f209, R.color.color_30f209)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
@@ -60,17 +62,19 @@ class RVIndexBannerAdapter(mListData : List<Data.Datas>,mListBanner : List<Banne
             var mVPBannerAdapter=VPBannerAdapter(mListBanner!!)
             holder.itemView.viewpager.adapter=mVPBannerAdapter
             mVPBannerAdapter.notifyDataSetChanged()
-            var th=Thread(Runnable {
-                Thread.sleep(2000)
-                count++
-                handler.post(object :Runnable{
-                    override fun run() {
-                        holder.itemView.viewpager.currentItem=count / mListBanner!!.size
+            if(th==null){
+                th=Thread(Runnable {
+                    while (true){
+                        Thread.sleep(4000)
+                        count++
+                        handler.post(object :Runnable{
+                            override fun run() {
+                                holder.itemView.viewpager.currentItem=count % mListBanner!!.size
+                            }
+                        })
                     }
                 })
-            })
-            if(!th.isAlive){
-                th.start()
+                th!!.start()
             }
         }else if(holder is MyHolder2){
             val datas = mListData!![position-1]
