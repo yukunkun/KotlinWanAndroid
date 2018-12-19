@@ -2,18 +2,23 @@ package com.yukun.kotlinwanandroid.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import android.widget.TextView
 import com.yukun.kotlinwanandroid.MyApp
 import com.yukun.kotlinwanandroid.R
 import com.yukun.kotlinwanandroid.activity.DetailActivity
 import com.yukun.kotlinwanandroid.beans.BannerBean
 import com.yukun.kotlinwanandroid.impl.CollectClickCallBack
 import com.yukun.kotlinwanandroid.utils.ToastUtils
+import kotlinx.android.synthetic.main.banner_item.view.*
 import kotlinx.android.synthetic.main.index_item.view.*
 import top.jowanxu.wanandroidclient.bean.Data
 import java.util.*
@@ -27,6 +32,8 @@ class RVIndexBannerAdapter(mListData : List<Data.Datas>,mListBanner : List<Banne
     private var mListBanner:List<BannerBean> ?=mListBanner
     private var context=context
     var random : Random=Random()
+    var count=0
+    var handler =Handler()
     internal var mList = arrayOf(R.color.color_2b2b2b, R.color.color_2e4eef, R.color.colorPrimary, R.color.color_ff2323, R.color.color_ff01bb, R.color.color_ff4081, R.color.color_ffe100, R.color.color_30f209, R.color.color_30f209)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
@@ -50,7 +57,21 @@ class RVIndexBannerAdapter(mListData : List<Data.Datas>,mListBanner : List<Banne
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         //banner
         if(holder is MyHolder){
-
+            var mVPBannerAdapter=VPBannerAdapter(mListBanner!!)
+            holder.itemView.viewpager.adapter=mVPBannerAdapter
+            mVPBannerAdapter.notifyDataSetChanged()
+            var th=Thread(Runnable {
+                Thread.sleep(2000)
+                count++
+                handler.post(object :Runnable{
+                    override fun run() {
+                        holder.itemView.viewpager.currentItem=count / mListBanner!!.size
+                    }
+                })
+            })
+            if(!th.isAlive){
+                th.start()
+            }
         }else if(holder is MyHolder2){
             val datas = mListData!![position-1]
             holder.itemView.tv_name.text= datas.author

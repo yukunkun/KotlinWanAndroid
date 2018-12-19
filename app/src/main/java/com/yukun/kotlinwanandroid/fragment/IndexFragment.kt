@@ -68,28 +68,33 @@ class IndexFragment: BaseFragment() {
 
         RetrofitFactory.getInstance().getBanner(object : BaseCallBack<List<BannerBean>>{
             override fun onSuccess(data: List<BannerBean>) {
+                Log.i("========d",data.toString())
                 mDataBanner.addAll(data)
+                getIndexData()
             }
 
             override fun onBadRespone(msg: String) {
             }
 
             override fun onFailture(call: Call<HomeListResponse<List<BannerBean>>>?, t: Throwable?) {
+
             }
-
         })
+    }
 
-        RetrofitFactory.getInstance().getIndexList(page,object : BaseCallBack<Data>{
+    private fun getIndexData() {
+        RetrofitFactory.getInstance().getIndexList(page, object : BaseCallBack<Data> {
             override fun onSuccess(data: Data) {
                 //.toMutableList()转换成可变集合，再调用addAll
                 mDataList.addAll(data.datas!!.toMutableList())
+
                 //完成
                 if (page == 0) {
                     refreshLayout!!.finishRefresh()
                 } else {
                     refreshLayout!!.finishLoadmore()
                 }
-                av_load.visibility=View.GONE
+                av_load.visibility = View.GONE
                 indexRvAdapter!!.notifyDataSetChanged()
             }
 
@@ -109,14 +114,15 @@ class IndexFragment: BaseFragment() {
             override fun onRefresh(refreshlayout: RefreshLayout?) {
                 page=0
                 mDataList.clear()
-                initData()
+                getIndexData()
             }
         })
 
         refreshLayout.setOnLoadmoreListener (object :OnLoadmoreListener{
             override fun onLoadmore(refreshlayout: RefreshLayout?) {
                 page++
-                initData()
+                getIndexData()
+//                initData()
             }
         } )
 
