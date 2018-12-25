@@ -49,7 +49,12 @@ class RVIndexBannerAdapter(mListData : List<Data.Datas>,mListBanner : List<Banne
     }
 
     override fun getItemCount(): Int {
-        return mListData!!.size+1
+        return if(mListData!=null){
+            mListData!!.size+1
+        }
+        else{
+            0
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -69,7 +74,9 @@ class RVIndexBannerAdapter(mListData : List<Data.Datas>,mListBanner : List<Banne
                         count++
                         handler.post(object :Runnable{
                             override fun run() {
-                                holder.itemView.viewpager.currentItem=count % mListBanner!!.size
+                                if(mListBanner!!.isNotEmpty()){
+                                    holder.itemView.viewpager.currentItem=count % mListBanner!!.size
+                                }
                             }
                         })
                     }
