@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 class RetrofitManager {
     var mOkHttpClient:OkHttpClient?=null
     var mRetrofit:Retrofit?=null
-    var baseUrl="http://www.wanandroid.com/"
+    var baseUrl="https://www.wanandroid.com/"
 
     private  val SAVE_USER_LOGIN_KEY = "user/login"
     private  val SAVE_USER_REGISTER_KEY = "user/register"
